@@ -5,9 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:provider_and_fstore/config/theme.dart';
 import 'package:provider_and_fstore/provider/catogory_provider.dart';
 import 'package:provider_and_fstore/provider/post_provider.dart';
+import 'package:provider_and_fstore/ui/screen/auth_screen.dart';
 import 'package:provider_and_fstore/ui/screen/bottom_screen.dart';
 import 'package:provider_and_fstore/ui/screen/category_detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'provider/auth_provider.dart';
 import 'provider/theme_provider.dart';
 
 void main() async{
@@ -31,6 +33,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => AuthProvider()
+        ),
         ChangeNotifierProvider.value(
           value: PostProvider()
         ),
@@ -47,7 +52,11 @@ class MyApp extends StatelessWidget {
           title: 'Firestore DEMO',
           debugShowCheckedModeBanner: false,
           theme: themeData.getTheme(),
-          home: BottomScreen(),
+          home: Consumer<AuthProvider>(
+            builder: (ctx, auth, _) {
+              return auth.user != null ? BottomScreen() : AuthScreen();
+            },
+          ),
           routes: {
             CategoryDetailScreen.routeName : (ctx) => CategoryDetailScreen(),
           },

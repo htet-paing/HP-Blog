@@ -38,8 +38,7 @@ class PostItem extends StatelessWidget {
               child: Container(
                 height: 170.0,
                 width: double.infinity,
-                child: post.image == null ? Center(child: Text('No Image'))
-                : Image.network(post.image, fit: BoxFit.cover,)
+                child: Image.network(post.image != null ? post.image : 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg', fit: BoxFit.cover,)
               ),
             ),
           ),

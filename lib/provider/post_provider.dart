@@ -7,28 +7,7 @@ import '../reposities/post_reposity.dart';
 class PostProvider with ChangeNotifier {
   final _postReposity = PostReposity();
   
-  List<Post> _postList = [
-    Post(
-      id: 'p1',
-      title: "US Election",
-      description: "This is US Election",
-      image: 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg',
-      catogory: [
-        'political',
-        'science'
-      ],
-    ),
-    Post(
-      id: 'p2',
-      title: "Joe Biden",
-      description: "This is Joe Biden",
-      image: 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg',
-      catogory: [
-        'technology',
-        'programming'
-      ],
-    ),
-  ];
+  List<Post> _postList = [];
   Post _currentPost;
 
   UnmodifiableListView<Post> get postList => UnmodifiableListView(_postList);
@@ -54,10 +33,11 @@ class PostProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> createPost(Post post, File imageFile) async {
-
-    
+  Future<void> uploadPostAndImage(Post post, File imageFile, bool isUpdating) async {
+    await _postReposity.uploadPostAndImage(post, imageFile, isUpdating);
+    notifyListeners();
   }
+
 
   
 }

@@ -67,6 +67,7 @@ class _HomeScreenState extends State<HomeScreen> {
         child: ListView.builder(
           itemCount: postData.postList.length,
           itemBuilder: (ctx, i) {
+            // return Text(postData.postList[i].catogory.toString());
             return PostItem(postData.postList[i]);
           }
         )

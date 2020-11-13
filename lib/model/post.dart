@@ -37,7 +37,7 @@ class Post {
       'title': title,
       'description': description,
       'image': image,
-      'category': catogory,
+      'catogory': catogory,
       'createdAt': createdAt,
       'updatedAt': updatedAt
     };

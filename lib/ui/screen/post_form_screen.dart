@@ -116,26 +116,28 @@ class _PostFormScreenState extends State<PostFormScreen> {
         return ;
       }
       _formKey.currentState.save();
-    
-    if (widget.isUpdating) {
-      //Update Post
       _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
-    print(_currentPost.title);
-    print(_currentPost.description);
-    print(_currentPost.catogory.toString());
-    print(_currentPost.image);
+    Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating);
+    
+    // if (widget.isUpdating) {
+    //   //Update Post
+    // _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
+    // print(_currentPost.title);
+    // print(_currentPost.description);
+    // print(_currentPost.catogory.toString());
+    // print(_currentPost.image);
 
 
-    }else {
-      //Create post
-    _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
-    Provider.of<PostProvider>(context, listen: false).createPost(_currentPost, _imageFile);
-    print(_currentPost.title);
-    print(_currentPost.description);
-    print(_currentPost.catogory.toString());
-    print(_imageFile.path);
+    // }else {
+    //   //Create post
+    // _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
+    // Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating);
+    // // print(_currentPost.title);
+    // // print(_currentPost.description);
+    // // print(_currentPost.catogory.toString());
+    // // print(_imageFile.path);
 
-    }
+    // }
 
   }
 
@@ -288,11 +290,12 @@ class _PostFormScreenState extends State<PostFormScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
+                    _imageFile == null && _imageUrl == null ?
                     RaisedButton(
                       color: Colors.blue,
                       child: Text('Upload Image'),
                       onPressed: () => _getLocalImage()
-                    ),
+                    ) : SizedBox(height: 0,),
                     RaisedButton(
                       color: Colors.blue,
                       child: Text('Publish'),

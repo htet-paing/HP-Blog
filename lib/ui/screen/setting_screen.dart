@@ -1,6 +1,7 @@
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider_and_fstore/config/theme.dart';
+import 'package:provider_and_fstore/provider/auth_provider.dart';
 import 'package:provider_and_fstore/provider/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -37,8 +38,9 @@ class _SettingScreenState extends State<SettingScreen> {
         'function': () => _pushPage(ExploreScreen()),
       },
       {
-        'icon': Feather.download,
-        'title': 'Download',
+        'icon': Feather.log_out,
+        'title': 'Logout',
+        'function' : () => _logout()
       },
       {
         'icon': Feather.moon,
@@ -116,6 +118,10 @@ class _SettingScreenState extends State<SettingScreen> {
         }
       )
     );
+  }
+
+  _logout() {
+    Provider.of<AuthProvider>(context).logout();
   }
 
   showAbout() {

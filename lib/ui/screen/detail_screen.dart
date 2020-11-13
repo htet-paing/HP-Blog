@@ -57,7 +57,8 @@ class _DetailScreenState extends State<DetailScreen> {
       body: Center(
         child: Column(
           children: [
-            Image.network(currentPost.image, fit: BoxFit.cover)
+            Image.network(currentPost.image != null ? 
+            currentPost.image : 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg' , fit: BoxFit.cover)
           ],
         )
       ),
