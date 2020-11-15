@@ -11,6 +11,7 @@ import 'package:provider_and_fstore/ui/screen/category_detail_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'provider/auth_provider.dart';
 import 'provider/theme_provider.dart';
+import 'ui/screen/splash_screen.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (ctx) => AuthProvider()
+          create: (ctx) => AuthProvider.instance()
         ),
         ChangeNotifierProvider.value(
           value: PostProvider()
@@ -54,7 +55,15 @@ class MyApp extends StatelessWidget {
           theme: themeData.getTheme(),
           home: Consumer<AuthProvider>(
             builder: (ctx, auth, _) {
-              return auth.user != null ? BottomScreen() : AuthScreen();
+              switch (auth.status) {
+                case AuthStatus.Uninitialized :
+                  return SplashScreen();
+                case AuthStatus.Unauthenticated :
+                case AuthStatus.Authenticating :
+                  return AuthScreen();
+                case AuthStatus.Authenticated :
+                  return BottomScreen();
+              }
             },
           ),
           routes: {

@@ -19,14 +19,6 @@ class AuthScreen extends StatelessWidget {
         children: <Widget>[
           Container(
             decoration: BoxDecoration(
-              // gradient: LinearGradient(
-              //   List: [
-              //     Theme.of(context).primaryColor.withOpacity(0.0),
-              //     Theme.of(context).accentColor.withOpacity(0.5),
-              //   ],
-              //   begin: Alignment.topLeft,
-              //   end: Alignment.bottomRight,
-              // )
               gradient: LinearGradient(
                 colors: [
                   Theme.of(context).primaryColor.withOpacity(0.0),
@@ -159,7 +151,7 @@ class _AuthCardState extends State<AuthCard> {
         Provider.of<AuthProvider>(context, listen: false).login(_user);
       } else {
         // Sign user up
-        Provider.of<AuthProvider>(context, listen: false).signup(_user);
+        // Provider.of<AuthProvider>(context, listen: false).signup(_user);
       }
     } on Exception catch (error) {
       //defauld message
@@ -306,7 +298,7 @@ class _AuthCardState extends State<AuthCard> {
                   onPressed: _switchAuthMode,
                   padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 4),
                   materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                  textColor: Theme.of(context).primaryColor,
+                  // textColor: Theme.of(context).primaryColor,
                 ),
               ],
             ),

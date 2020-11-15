@@ -121,7 +121,8 @@ class _SettingScreenState extends State<SettingScreen> {
   }
 
   _logout() {
-    Provider.of<AuthProvider>(context).logout();
+    Provider.of<AuthProvider>(context, listen: false).signout();
+
   }
 
   showAbout() {

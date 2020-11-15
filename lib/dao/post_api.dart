@@ -1,58 +1,11 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:provider_and_fstore/model/post.dart';
 import 'package:path/path.dart'as path;
-import 'package:provider_and_fstore/model/user.dart';
 import 'package:uuid/uuid.dart';
 
-FirebaseAuth _auth = FirebaseAuth.instance;
 class PostApi {
-
-
-  Future<AUser> login(AUser user) async {
-    try {
-      final UserCredential userCredential = await _auth.signInWithEmailAndPassword(email: user.email, password: user.password);
-      if (userCredential != null) {
-        User user = userCredential.user;
-        if (user != null) {
-          print("LOggedIn :");
-        }
-      }     
-      return user; 
-    } catch(error) {
-      print(error);
-    }
-  }
-
-  Future<void> signup(AUser user) async {
-    try {
-      final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: user.email, password: user.password);
-      
-      if (userCredential != null) {
-        User user = userCredential.user;
-
-        if (user != null) {
-          await _auth.currentUser.updateProfile(displayName: user.displayName);
-          await user.reload();
-          print("SignUp: $user");
-          User currentUser =  _auth.currentUser;
-        }
-      }
-    }catch (error) {
-      print(error);
-    }
-  }
-
-  Future<void> logout() async {
-    await _auth.signOut();
-  }
-
-
-
-
-
 
   Future<List<Post>> getPosts() async {
     Query snapshot = FirebaseFirestore.instance
@@ -63,7 +16,6 @@ class PostApi {
     await snapshot.get().then((querySnapshot) async {
       querySnapshot.docs.forEach((document) {
         Post post = Post.fromJson(document.data());
-        print(post.catogory.toString());
         _postList.add(post);
       });
     });
