@@ -58,7 +58,9 @@ class PostApi {
 
     if (isUpdating) {
       //Update Post
-     
+      post.updatedAt = Timestamp.now();
+      await postRef.doc(post.id).update(post.toJson());
+      print("Updated Post with ID : ${post.id}");
     }else {
       //Create POst
       post.createdAt = Timestamp.now();
@@ -70,4 +72,12 @@ class PostApi {
     }
   }
   
+  Future<void> deletePost(Post post) async {
+    if (post.image != null) {
+      StorageReference storageReference = await FirebaseStorage.instance.getReferenceFromUrl(post.image);
+      print(storageReference.path);
+      await storageReference.delete();
+    }
+      await FirebaseFirestore.instance.collection('Posts').doc(post.id).delete();
+  }
 }

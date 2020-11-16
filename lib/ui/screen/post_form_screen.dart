@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,7 +6,6 @@ import 'package:provider/provider.dart';
 import 'package:provider_and_fstore/model/post.dart';
 import 'package:provider_and_fstore/provider/catogory_provider.dart';
 import 'package:provider_and_fstore/provider/post_provider.dart';
-
 import 'category_choice.dart';
 
 class PostFormScreen extends StatefulWidget {
@@ -98,6 +96,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
         ),
       );
     }
+    return Container();
   }
 
   Future<void> _getLocalImage() async{
@@ -114,31 +113,11 @@ class _PostFormScreenState extends State<PostFormScreen> {
   void _saveForm() {
     if (!_formKey.currentState.validate()) {
         return ;
-      }
+    }
       _formKey.currentState.save();
       _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
     Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating);
     
-    // if (widget.isUpdating) {
-    //   //Update Post
-    // _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
-    // print(_currentPost.title);
-    // print(_currentPost.description);
-    // print(_currentPost.catogory.toString());
-    // print(_currentPost.image);
-
-
-    // }else {
-    //   //Create post
-    // _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
-    // Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating);
-    // // print(_currentPost.title);
-    // // print(_currentPost.description);
-    // // print(_currentPost.catogory.toString());
-    // // print(_imageFile.path);
-
-    // }
-
   }
 
 

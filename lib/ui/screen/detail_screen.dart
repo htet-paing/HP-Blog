@@ -43,6 +43,7 @@ class _DetailScreenState extends State<DetailScreen> {
                   );
                 }else {
                   print("Deleted Post");
+                  Provider.of<PostProvider>(context, listen: false).deletePost(currentPost);
                 }
               });
             },

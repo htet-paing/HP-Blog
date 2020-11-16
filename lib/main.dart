@@ -16,60 +16,62 @@ import 'ui/screen/splash_screen.dart';
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  
   SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]).then((_) {
     SharedPreferences.getInstance().then((prefs) {
       var darkModeOn = prefs.getBool('darkMode') ?? true;
       
-      runApp(MyApp(darkModeOn));
+      runApp(
+        MultiProvider(
+          providers: [
+            ChangeNotifierProvider(
+              create: (ctx) => AuthProvider.instance()
+            ),
+            ChangeNotifierProvider.value(
+              value: PostProvider()
+            ),
+            ChangeNotifierProvider.value(
+              value: CatogoryProvider()
+            ),
+            ChangeNotifierProvider<ThemeProvider>(
+              create: (_) => ThemeProvider(darkModeOn ? ThemeConfig.darkTheme : ThemeConfig.lightTheme)
+            )
+          ],
+          child: MyApp(),
+        )
+      );
     });
   });
 }
 
 class MyApp extends StatelessWidget {
-  var darkModeOn;
-  MyApp(this.darkModeOn);
-
+ 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (ctx) => AuthProvider.instance()
-        ),
-        ChangeNotifierProvider.value(
-          value: PostProvider()
-        ),
-        ChangeNotifierProvider.value(
-          value: CatogoryProvider()
-        ),
-        ChangeNotifierProvider<ThemeProvider>(
-          create: (_) => ThemeProvider(darkModeOn ? ThemeConfig.darkTheme : ThemeConfig.lightTheme)
-        )
-      ],
-      child: Consumer<ThemeProvider>(
-        builder: (ctx, themeData,_) => 
-        MaterialApp(
-          title: 'Firestore DEMO',
-          debugShowCheckedModeBanner: false,
-          theme: themeData.getTheme(),
-          home: Consumer<AuthProvider>(
-            builder: (ctx, auth, _) {
-              switch (auth.status) {
-                case AuthStatus.Uninitialized :
-                  return SplashScreen();
-                case AuthStatus.Unauthenticated :
-                case AuthStatus.Authenticating :
-                  return AuthScreen();
-                case AuthStatus.Authenticated :
-                  return BottomScreen();
-              }
-            },
-          ),
-          routes: {
-            CategoryDetailScreen.routeName : (ctx) => CategoryDetailScreen(),
+    return Consumer<ThemeProvider>(
+      builder: (ctx, themeData,_) => 
+      MaterialApp(
+        title: 'Firestore DEMO',
+        debugShowCheckedModeBanner: false,
+        theme: themeData.getTheme(),
+        home: Consumer<AuthProvider>(
+          builder: (ctx, auth, _) {
+            switch (auth.status) {
+              case AuthStatus.Uninitialized :
+                return SplashScreen();
+              case AuthStatus.Unauthenticated :
+              case AuthStatus.Authenticating :
+                return AuthScreen();
+              case AuthStatus.Authenticated :
+                return BottomScreen();
+            }
+            return Container();
           },
         ),
+        routes: {
+          CategoryDetailScreen.routeName : (ctx) => CategoryDetailScreen(),
+        },
       ),
     );
   }

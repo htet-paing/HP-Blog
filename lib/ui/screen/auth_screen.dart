@@ -64,7 +64,6 @@ class AuthScreen extends StatelessWidget {
                           Text(
                             'Flutter Blog',
                             style: GoogleFonts.pacifico(
-                              color: Colors.white,
                               fontSize: 30,                          
                               fontWeight: FontWeight.bold,
                             )
@@ -114,7 +113,6 @@ class _AuthCardState extends State<AuthCard> {
   AuthMode _authMode = AuthMode.Login;
   AUser _user = AUser();
 
-  bool _isLoading = false;
   
   final _passwordController = TextEditingController();
 
@@ -142,16 +140,16 @@ class _AuthCardState extends State<AuthCard> {
       return;
     }
     _formKey.currentState.save();
-    setState(() {
-      _isLoading = true;
-    });
+    // setState(() {
+    //   _isLoading = true;
+    // });
     try {
       if (_authMode == AuthMode.Login) {
         // Log user in
-        Provider.of<AuthProvider>(context, listen: false).login(_user);
+        Provider.of<AuthProvider>(context, listen: false).signin(_user);
       } else {
         // Sign user up
-        // Provider.of<AuthProvider>(context, listen: false).signup(_user);
+        Provider.of<AuthProvider>(context, listen: false).signup(_user);
       }
     } on Exception catch (error) {
       //defauld message
@@ -178,9 +176,9 @@ class _AuthCardState extends State<AuthCard> {
       _showErrorDialog(errorMessage);
     }
 
-    setState(() {
-      _isLoading = false;
-    });
+    // setState(() {
+    //   _isLoading = false;
+    // });
   }
 
   void _switchAuthMode() {
@@ -197,6 +195,7 @@ class _AuthCardState extends State<AuthCard> {
 
   @override
   Widget build(BuildContext context) {
+    final auth = Provider.of<AuthProvider>(context);
     final deviceSize = MediaQuery.of(context).size;
     return Card(
       // color: Colors.black,
@@ -277,9 +276,12 @@ class _AuthCardState extends State<AuthCard> {
                 SizedBox(
                   height: 20,
                 ),
-                if (_isLoading)
-                  CircularProgressIndicator()
-                else
+                // if (_isLoading)
+                //   CircularProgressIndicator()
+                // else
+                auth.status == AuthStatus.Authenticating 
+                ? Center(child: CircularProgressIndicator())
+                :
                   RaisedButton(
                     child:
                         Text(_authMode == AuthMode.Login ? 'LOGIN' : 'SIGN UP'),

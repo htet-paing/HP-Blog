@@ -31,9 +31,10 @@ class _HomeScreenState extends State<HomeScreen> {
     super.didChangeDependencies();
   }
 
+  
   @override
   Widget build(BuildContext context) {
-    final postData = Provider.of<PostProvider>(context, listen: false);
+    final postData = Provider.of<PostProvider>(context);
     return Scaffold(  
       appBar: AppBar(
         centerTitle: true,
@@ -61,18 +62,16 @@ class _HomeScreenState extends State<HomeScreen> {
           )
         ],       
       ),
-      body: _isLoading ? Center(
-        child: CircularProgressIndicator()
-      ) : Center(
+      body: _isLoading ? 
+      Center(child: CircularProgressIndicator())
+      : Center(
         child: ListView.builder(
           itemCount: postData.postList.length,
           itemBuilder: (ctx, i) {
-            // return Text(postData.postList[i].catogory.toString());
             return PostItem(postData.postList[i]);
           }
         )
       )
-
     );
   }
 }

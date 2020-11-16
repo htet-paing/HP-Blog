@@ -6,7 +6,7 @@ import '../reposities/post_reposity.dart';
 
 class PostProvider with ChangeNotifier {
   final _postReposity = PostReposity();
-  
+    
   List<Post> _postList = [];
   Post _currentPost;
 
@@ -30,14 +30,20 @@ class PostProvider with ChangeNotifier {
 
   Future<void> getPosts() async {
     this.postList = await _postReposity.getPosts();
-    notifyListeners();
+    notifyListeners();    
   }
+
 
   Future<void> uploadPostAndImage(Post post, File imageFile, bool isUpdating) async {
     await _postReposity.uploadPostAndImage(post, imageFile, isUpdating);
     notifyListeners();
   }
 
+  Future<void> deletePost(Post post) async {
+    await _postReposity.deletePost(post);
+    _postList.removeWhere((_post) => _post.id == post.id);
+    notifyListeners();
+  }
 
   
 }
