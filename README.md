@@ -1,16 +1,30 @@
-# provider_and_fstore
+<h1 align="center">Flutter Blog Application</h1>
+<div align="center">
+  <strong>Built with Flutter, Provider, and Firebase</strong>
+</div>
 
-A new Flutter project.
+<br> Please star⭐ the repo if you like what you see😉.
 
-## Getting Started
+## 💻 Requirements
 
-This project is a starting point for a Flutter application.
+- Any Operating System (ie. MacOS X, Linux, Windows)
+- Any IDE with Flutter SDK installed (ie. IntelliJ, Android Studio, VSCode etc)
+- A little knowledge of Dart and Flutter
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## 📸 ScreenShots
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+<!-- <img src="ss/mockup.png"/> -->
+
+| Light                             | Dark                              |
+| --------------------------------- | --------------------------------- |
+| <img src="ss/1.png" width="400">  | <img src="ss/2.png" width="400">  |
+| <img src="ss/3.png" width="400">  | <img src="ss/4.png" width="400">  |
+| <img src="ss/5.png" width="400">  | <img src="ss/6.png" width="400">  |
+| <img src="ss/7.png" width="400">  | <img src="ss/8.png" width="400">  |
+| <img src="ss/9.png" width="400">  | <img src="ss/10.png" width="400"> |
+| <img src="ss/11.png" width="400"> | <img src="ss/12.png" width="400"> |
+| <img src="ss/13.png" width="400"> | <img src="ss/14.png" width="400"> |
+
+
+
