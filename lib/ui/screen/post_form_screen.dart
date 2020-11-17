@@ -22,6 +22,7 @@ class _PostFormScreenState extends State<PostFormScreen> {
   var _currentPost = Post();
   String _imageUrl;
   File _imageFile;
+  bool _isLoading = false;
 
   bool _isInit = true;
 
@@ -115,8 +116,14 @@ class _PostFormScreenState extends State<PostFormScreen> {
         return ;
     }
       _formKey.currentState.save();
+      setState(() {
+        _isLoading = true;
+      });
       _currentPost.catogory = Provider.of<CatogoryProvider>(context, listen: false).mySelectedCat;
-    Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating);
+    Provider.of<PostProvider>(context, listen: false).uploadPostAndImage(_currentPost, _imageFile, widget.isUpdating).then((_) {
+    Navigator.pop(context);
+
+    });
     
   }
 
@@ -131,7 +138,9 @@ class _PostFormScreenState extends State<PostFormScreen> {
         )),
         centerTitle: true,
       ),
-      body: SingleChildScrollView(
+      body: _isLoading
+      ? Center(child: CircularProgressIndicator(),)
+      : SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           child: Form(

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:provider_and_fstore/config/theme.dart';
+import 'package:provider_and_fstore/provider/bookmark_provider.dart';
 import 'package:provider_and_fstore/provider/catogory_provider.dart';
 import 'package:provider_and_fstore/provider/post_provider.dart';
 import 'package:provider_and_fstore/ui/screen/auth_screen.dart';
@@ -32,6 +33,9 @@ void main() async{
             ),
             ChangeNotifierProvider.value(
               value: CatogoryProvider()
+            ),
+            ChangeNotifierProvider(
+              create:(_) => BookmarkProvider()
             ),
             ChangeNotifierProvider<ThemeProvider>(
               create: (_) => ThemeProvider(darkModeOn ? ThemeConfig.darkTheme : ThemeConfig.lightTheme)

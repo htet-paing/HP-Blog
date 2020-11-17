@@ -1,6 +1,7 @@
 import 'dart:collection';
 import 'dart:io';
 import 'package:flutter/foundation.dart';
+import 'package:provider_and_fstore/database/bookmark_db.dart';
 import 'package:provider_and_fstore/model/post.dart';
 import '../reposities/post_reposity.dart';
 
@@ -9,6 +10,10 @@ class PostProvider with ChangeNotifier {
     
   List<Post> _postList = [];
   Post _currentPost;
+
+  BookmarkDB bookmarkDB = BookmarkDB();
+
+  bool bookmarked = false;
 
   UnmodifiableListView<Post> get postList => UnmodifiableListView(_postList);
 
@@ -35,7 +40,7 @@ class PostProvider with ChangeNotifier {
 
 
   Future<void> uploadPostAndImage(Post post, File imageFile, bool isUpdating) async {
-    await _postReposity.uploadPostAndImage(post, imageFile, isUpdating);
+     await _postReposity.uploadPostAndImage(post, imageFile, isUpdating);
     notifyListeners();
   }
 
@@ -46,4 +51,30 @@ class PostProvider with ChangeNotifier {
   }
 
   
+  //check if post is bookmarked
+  checkBookmark() async {
+    List c = await bookmarkDB.check({'id' : currentPost.id.toString()});
+    if (c.isNotEmpty) {
+      setBookmarked(true);
+    }else {
+      setBookmarked(false);
+    }
+  }
+
+  void setBookmarked(value) {
+    bookmarked = value;
+    notifyListeners();
+  }
+
+  addBookmark() async {
+    await bookmarkDB.add({'id' : currentPost.id.toString(), 'item': currentPost.toJson()});
+    checkBookmark();
+  }
+
+  removeBookmark() async {
+    bookmarkDB.remove({'id' : currentPost.id.toString()}).then((v) {
+      print(v);
+      checkBookmark();
+    });
+  }
 }

@@ -8,4 +8,6 @@ class PostReposity {
   Future getPosts() => postApi.getPosts();
   Future uploadPostAndImage(Post post, File imageFile, bool isUpdating) => postApi.uploadPostAndImage(post, imageFile, isUpdating); 
   Future deletePost(Post post) => postApi.deletePost(post);
+
+  
 }

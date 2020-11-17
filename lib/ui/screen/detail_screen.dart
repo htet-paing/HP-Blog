@@ -19,7 +19,7 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   Widget build(BuildContext context) {
-    final currentPost = Provider.of<PostProvider>(context).currentPost;
+    final postData = Provider.of<PostProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text('Detail',style: GoogleFonts.playfairDisplay(
@@ -43,7 +43,9 @@ class _DetailScreenState extends State<DetailScreen> {
                   );
                 }else {
                   print("Deleted Post");
-                  Provider.of<PostProvider>(context, listen: false).deletePost(currentPost);
+                  Provider.of<PostProvider>(context, listen: false).deletePost(postData.currentPost).then((_) {
+                    Navigator.pop(context);
+                  });
                 }
               });
             },
@@ -52,14 +54,29 @@ class _DetailScreenState extends State<DetailScreen> {
               PopupMenuItem(child: Text('Update'), value: Options.Update,),
               PopupMenuItem(child: Text('Delete'), value: Options.Delete,),
             ]
+          ),
+          IconButton(
+            icon: Icon(
+              postData.bookmarked ? Icons.bookmark : Icons.bookmark_border,
+              color: postData.bookmarked 
+                  ? Colors.red
+                  : Colors.white
+            ), 
+            onPressed: () async{
+              if (postData.bookmarked) {
+                postData.removeBookmark();
+              }else {
+                postData.addBookmark();
+              }
+            }
           )
         ],
       ),
       body: Center(
         child: Column(
           children: [
-            Image.network(currentPost.image != null ? 
-            currentPost.image : 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg' , fit: BoxFit.cover)
+            Image.network(postData.currentPost.image != null ? 
+            postData.currentPost.image : 'https://i1.wp.com/www.dailyustimes.com/wp-content/uploads/2020/07/Major-US-figures-Twitter-accounts-hacked-in-Bitcoin-scam.jpg' , fit: BoxFit.cover)
           ],
         )
       ),

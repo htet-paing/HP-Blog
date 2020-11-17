@@ -92,10 +92,7 @@ class PostItem extends StatelessWidget {
                   ),  
                 ],
               ),
-              IconButton(
-                icon: Icon(Icons.bookmark_border), 
-                onPressed: () {}
-              )
+              
             ],
             ),
           )
