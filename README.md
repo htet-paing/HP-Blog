@@ -16,7 +16,7 @@
 
 <!-- <img src="ss/mockup.png"/> -->
 
-| Light                             | Dark                              |
+| Dark                              | Light                             |
 | --------------------------------- | --------------------------------- |
 | <img src="ss/1.jpg" width="400">  | <img src="ss/2.jpg" width="400">  |
 | <img src="ss/3.jpg" width="400">  | <img src="ss/4.jpg" width="400">  |
